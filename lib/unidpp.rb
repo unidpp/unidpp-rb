@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # UniDPP — Ruby library for the international Digital Product Passport
-# framework (PLAN.md invariants I1–I14; see https://github.com/unidpp).
+# framework (the UniDPP design framework invariants I1–I14; see https://github.com/unidpp).
 #
 # Loading discipline: this file is the only require point. Every other
 # constant is lazily loaded through autoload entries declared here (and,
