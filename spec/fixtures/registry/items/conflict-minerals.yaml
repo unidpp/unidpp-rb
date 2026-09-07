@@ -1,0 +1,32 @@
+identifier: conflict-minerals
+register: unidpp-dev
+item_class: profile
+title: Conflict minerals characteristic profile
+submitting_organization: OECD liaison
+versions:
+  - version: "1.0.0"
+    status: valid
+    effective_from: 2021-01-01T00:00:00+00:00
+    registered_at: 2021-01-01T00:00:00+00:00
+manifest:
+  profile_id: conflict-minerals
+  version: "1.0.0"
+  register: unidpp-dev
+  owner: OECD
+  legal_basis: https://www.oecd.org/due-diligence
+  axes:
+    jurisdictions: []
+    sectors: []
+    characteristics: [conflict_minerals]
+  triggers:
+    - subject: materials.origin
+      operator: contains
+      value: 3TG
+      cites: urn:unidpp-dev:clause:oecd-dd-annex-ii
+  capability_class: S0
+  data_points:
+    - urn:unidpp-dev:dp:smelter-list
+  languages: [en]
+  effective_from: 2021-01-01T00:00:00+00:00
+  resolution: restricted
+  confidential: false

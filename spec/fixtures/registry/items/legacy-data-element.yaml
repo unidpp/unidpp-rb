@@ -1,0 +1,11 @@
+identifier: legacy-data-element
+register: unidpp-dev
+item_class: data-element
+title: Retired legacy data element
+submitting_organization: UniDPP
+versions:
+  - version: "1.0.0"
+    status: retired
+    effective_from: 2018-01-01T00:00:00+00:00
+    effective_until: 2023-01-01T00:00:00+00:00
+    registered_at: 2017-12-01T00:00:00+00:00

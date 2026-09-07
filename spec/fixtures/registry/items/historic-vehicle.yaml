@@ -1,0 +1,37 @@
+identifier: historic-vehicle
+register: unidpp-dev
+item_class: profile
+title: Historic vehicle characteristic profile
+submitting_organization: FIVA liaison
+versions:
+  - version: "1.0.0"
+    status: superseded
+    effective_from: 1996-01-01T00:00:00+00:00
+    registered_at: 1995-06-01T00:00:00+00:00
+    superseded_by_version: "2.0.0"
+  - version: "2.0.0"
+    status: valid
+    effective_from: 2021-06-01T00:00:00+00:00
+    registered_at: 2021-03-01T00:00:00+00:00
+manifest:
+  profile_id: historic-vehicle
+  version: "2.0.0"
+  register: unidpp-dev
+  owner: FIVA
+  legal_basis: https://www.fiva.org/heritage
+  axes:
+    jurisdictions: []
+    sectors: []
+    characteristics: [historic_vehicle]
+  triggers:
+    - subject: object.age_years
+      operator: gte
+      value: "30"
+      cites: urn:unidpp-dev:clause:fiva-heritage-4.1
+  capability_class: S0
+  data_points:
+    - urn:unidpp-dev:dp:first-registration-date
+  languages: [en]
+  effective_from: 1996-01-01T00:00:00+00:00
+  resolution: public
+  confidential: false

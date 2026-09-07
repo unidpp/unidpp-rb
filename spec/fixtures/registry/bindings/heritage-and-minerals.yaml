@@ -1,0 +1,13 @@
+bindings:
+  - subject: "gtin:06901234000016"
+    profile_item: historic-vehicle
+    register: unidpp-dev
+    effective_from: 1996-01-01T00:00:00+00:00
+    registered_at: 2026-05-01T00:00:00+00:00
+    retroactive: true
+  - subject: "gtin:06901234000016"
+    profile_item: conflict-minerals
+    register: unidpp-dev
+    effective_from: 2021-01-01T00:00:00+00:00
+    registered_at: 2023-01-01T00:00:00+00:00
+    retroactive: false

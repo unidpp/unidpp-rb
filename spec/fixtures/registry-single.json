@@ -1,0 +1,54 @@
+{
+  "register": {
+    "register_id": "unidpp-single",
+    "name": "UniDPP single-file register"
+  },
+  "items": [
+    {
+      "identifier": "eu-espr-textiles",
+      "register": "unidpp-single",
+      "item_class": "profile",
+      "title": "EU ESPR textiles jurisdiction profile",
+      "versions": [
+        {
+          "version": "1.0.0",
+          "status": "valid",
+          "effective_from": "2027-10-18T00:00:00+00:00",
+          "registered_at": "2027-09-01T00:00:00+00:00"
+        }
+      ],
+      "manifest": {
+        "profile_id": "eu-espr-textiles",
+        "version": "1.0.0",
+        "register": "unidpp-single",
+        "owner": "European Commission",
+        "axes": { "jurisdictions": ["EU"], "sectors": ["textiles"] },
+        "capability_class": "S1",
+        "effective_from": "2027-10-18T00:00:00+00:00"
+      }
+    },
+    {
+      "identifier": "unit-kwh",
+      "register": "unidpp-single",
+      "item_class": "unit",
+      "title": "kilowatt hour",
+      "versions": [
+        {
+          "version": "1.0.0",
+          "status": "valid",
+          "effective_from": "2020-01-01T00:00:00+00:00"
+        }
+      ]
+    }
+  ],
+  "applicability": [
+    {
+      "subject": "gtin:06901234000016",
+      "profile_item": "eu-espr-textiles",
+      "register": "unidpp-single",
+      "effective_from": "2026-10-18T00:00:00+00:00",
+      "registered_at": "2026-09-01T00:00:00+00:00",
+      "retroactive": false
+    }
+  ]
+}

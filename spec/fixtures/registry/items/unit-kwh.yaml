@@ -1,0 +1,10 @@
+identifier: unit-kwh
+register: unidpp-dev
+item_class: unit
+title: kilowatt hour
+submitting_organization: UnitsML coalition
+versions:
+  - version: "1.0.0"
+    status: valid
+    effective_from: 2020-01-01T00:00:00+00:00
+    registered_at: 2019-10-01T00:00:00+00:00

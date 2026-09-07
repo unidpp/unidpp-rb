@@ -1,0 +1,15 @@
+bindings:
+  - subject: "gtin:06901234000016"
+    profile_item: eu-espr-textiles
+    register: unidpp-dev
+    profile_version: "1.0.0"
+    effective_from: 2026-10-18T00:00:00+00:00
+    registered_at: 2026-09-01T00:00:00+00:00
+    retroactive: false
+  - subject: "gtin:06901234000016"
+    profile_item: jp-meti-electronics
+    register: unidpp-dev
+    profile_version: "2029.1.0"
+    effective_from: 2029-04-01T00:00:00+00:00
+    registered_at: 2029-03-15T00:00:00+00:00
+    retroactive: false

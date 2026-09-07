@@ -1,0 +1,45 @@
+identifier: eu-espr-textiles
+register: unidpp-dev
+item_class: profile
+title: EU ESPR textiles jurisdiction profile
+submitting_organization: CEN-CLC/JTC 24
+versions:
+  - version: "0.9.0"
+    status: superseded
+    effective_from: 2026-10-18T00:00:00+00:00
+    effective_until: 2027-10-18T00:00:00+00:00
+    registered_at: 2026-09-01T00:00:00+00:00
+    superseded_by_version: "1.0.0"
+    notes: first delegated-act edition
+  - version: "1.0.0"
+    status: valid
+    effective_from: 2027-10-18T00:00:00+00:00
+    registered_at: 2027-09-01T00:00:00+00:00
+    notes: consolidated edition
+manifest:
+  profile_id: eu-espr-textiles
+  version: "1.0.0"
+  register: unidpp-dev
+  owner: European Commission
+  legal_basis: https://eur-lex.europa.eu/eli/reg/2024/1781/oj
+  axes:
+    jurisdictions: [EU]
+    sectors: [textiles]
+    characteristics: []
+  capability_class: S1
+  crypto_suites:
+    - suite_id: ec-dsa-p-256-sha-256
+      jurisdiction: EU
+      use: sign
+      phase: primary
+    - suite_id: ml-dsa-65
+      jurisdiction: EU
+      use: sign
+      phase: composite
+  data_points:
+    - urn:unidpp-dev:dp:recycled-content-share
+    - urn:unidpp-dev:dp:fibre-composition
+  languages: [en, fr, de]
+  effective_from: 2027-10-18T00:00:00+00:00
+  resolution: public
+  confidential: false

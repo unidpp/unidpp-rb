@@ -1,0 +1,32 @@
+identifier: jp-meti-electronics
+register: unidpp-dev
+item_class: profile
+title: JP METI electronics jurisdiction profile
+submitting_organization: JISC
+versions:
+  - version: "2029.1.0"
+    status: valid
+    effective_from: 2029-04-01T00:00:00+00:00
+    registered_at: 2029-03-15T00:00:00+00:00
+manifest:
+  profile_id: jp-meti-electronics
+  version: "2029.1.0"
+  register: unidpp-dev
+  owner: METI
+  legal_basis: https://www.meti.go.jp/example-act
+  axes:
+    jurisdictions: [JP]
+    sectors: [electronics]
+    characteristics: []
+  capability_class: S2
+  crypto_suites:
+    - suite_id: ec-dsa-p-256-sha-256
+      jurisdiction: JP
+      use: sign
+      phase: primary
+  data_points:
+    - urn:unidpp-dev:dp:energy-efficiency-rating
+  languages: [ja, en]
+  effective_from: 2029-04-01T00:00:00+00:00
+  resolution: national
+  confidential: false
