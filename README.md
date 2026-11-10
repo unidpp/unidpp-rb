@@ -135,3 +135,12 @@ P1 groundwork per ``: model + event log + registry
 client in Ruby; the canonical algorithms live in `unidpp-core` (Rust) and
 this gem mirrors their semantics for the Ruby ecosystem (glossarist
 bridge, expressir/CDDAL hooks to follow).
+
+## Releasing
+
+Releases are version tags: a pushed `v*` tag runs `.github/workflows/publish.yml`,
+which builds the gem and pushes it to RubyGems.org through RubyGems trusted
+publishing. Trusted publishing needs a one-time link on rubygems.org: under the
+gem's settings, add this repository and the `publish` workflow as a trusted
+publisher. The first publication of 0.1.0 was made by the owner from a
+maintainer machine, before trusted publishing was linked.
