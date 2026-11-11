@@ -15,7 +15,6 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ruby
-          bundler-cache: true
       - uses: rubygems/configure-rubygems-credentials@dc5a8d8553e6ee01fc26761a49e99e733d17954a # v2.1.0
       - run: gem build unidpp.gemspec
       - run: gem push unidpp-*.gem
