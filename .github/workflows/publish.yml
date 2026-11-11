@@ -4,9 +4,18 @@ on:
     tags: ["v*"]
 
 permissions:
-  contents: write
+  contents: read
   id-token: write
 
 jobs:
   rubygems:
-    uses: rubygems/release-gem@v1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ruby
+          bundler-cache: true
+      - uses: rubygems/configure-rubygems-credentials@v2
+      - run: gem build unidpp.gemspec
+      - run: gem push unidpp-*.gem
