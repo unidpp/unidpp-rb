@@ -15,6 +15,7 @@ module Unidpp
   autoload :VERSION,         "unidpp/version"
   autoload :CanonicalJson,   "unidpp/canonical_json"
   autoload :AnnexB,          "unidpp/annexb"
+  autoload :TierA,           "unidpp/tier_a"
   autoload :S13,             "unidpp/s13"
   autoload :Gs1,             "unidpp/gs1"
   autoload :ProductIdentifier, "unidpp/identifier"
