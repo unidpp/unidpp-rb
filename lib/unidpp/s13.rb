@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "ed25519"
+require "digest"
 
 module Unidpp
   # The S13 trust layer (XB-6/7): verify the seam's signed envelopes
@@ -28,6 +29,61 @@ module Unidpp
       "slh-dsa-128s" => 7,
       "slh-dsa-192s" => 8
     }.freeze
+
+    # The native keyring's derivation label (Annex B): the Ed25519
+    # seed is sha256 over this label and the caller's seed — the same
+    # keys the Rust side derives, and Ed25519's determinism makes the
+    # signatures byte-identical.
+    SEED_LABEL = "UNIDPP-SIGNATIF/KEY-SEED"
+
+    SeededKey = Struct.new(:signing_key, :public_bytes, :key_id) do
+      def sign_framed(payload)
+        domain = "#{DOMAIN}\x00".b + payload
+        signing_key.sign(domain)
+      end
+    end
+
+    def seeded_key(seed)
+      seed = seed.encode(Encoding::UTF_8) if seed.is_a?(String)
+      scalar = Digest::SHA256.digest(SEED_LABEL.b + seed)
+      signing_key = Ed25519::SigningKey.new(scalar)
+      public_bytes = signing_key.verify_key.to_bytes
+      SeededKey.new(signing_key, public_bytes, key_id("ed25519", public_bytes))
+    end
+
+    def issue_request(request, requester, key)
+      {
+        "request" => request,
+        "requester" => requester,
+        "signature" => slot_for(key, AnnexB.request_canonical(request))
+      }
+    end
+
+    def issue_response(response, custodian, key)
+      signed = response.merge("custodian" => custodian)
+      {
+        "response" => signed,
+        "signature" => slot_for(key, AnnexB.response_canonical(signed))
+      }
+    end
+
+    def countersign(signed_response, authority, sequence, key)
+      payload = authority_payload(signed_response["response"], sequence)
+      {
+        "signed" => signed_response,
+        "authority" => authority,
+        "authority_signature" => slot_for(key, payload),
+        "sequence" => sequence
+      }
+    end
+
+    def slot_for(key, canonical_bytes)
+      {
+        "suite" => "ed25519",
+        "key_id" => key.key_id,
+        "signature" => key.sign_framed(canonical_bytes).unpack("C*")
+      }
+    end
 
     def key_id(suite, public_key)
       code = SUITE_CODES[suite]

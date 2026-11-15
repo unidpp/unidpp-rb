@@ -104,3 +104,65 @@ RSpec.describe Unidpp::S13 do
     end
   end
 end
+
+RSpec.describe "the issuing side (the seeded derivation)" do
+  def vectors(name)
+    JSON.parse(File.read(File.expand_path("fixtures/vectors/#{name}", __dir__)))
+  end
+
+  let(:exchange) { vectors("s13-signed-exchange.json") }
+
+  it "derives the F2 verifier's key and reproduces the signature byte-identically" do
+    key = Unidpp::S13.seeded_key("s13/de-zoll")
+    expect(key.public_bytes.unpack1("H*")).to eq(exchange["requester_public_hex"])
+    expect(key.key_id).to eq(exchange["signed_request"]["signature"]["key_id"])
+    issued = Unidpp::S13.issue_request(exchange["signed_request"]["request"], "de-zoll", key)
+    expect(issued["signature"]["signature"]).to eq(exchange["signed_request"]["signature"]["signature"])
+  end
+
+  it "derives the custodian key and issues the same answer" do
+    key = Unidpp::S13.seeded_key("s13/weilian")
+    expect(key.public_bytes.unpack1("H*")).to eq(exchange["responder_public_hex"])
+    issued = Unidpp::S13.issue_response(
+      exchange["signed_response"]["response"],
+      exchange["signed_response"]["response"]["custodian"],
+      key
+    )
+    expect(issued["signature"]["signature"]).to eq(exchange["signed_response"]["signature"]["signature"])
+  end
+
+  it "an issued exchange verifies and replays through the trust layer" do
+    requester = Unidpp::S13.seeded_key("story/verifier")
+    custodian = Unidpp::S13.seeded_key("story/custodian")
+    authority = Unidpp::S13.seeded_key("story/authority")
+    request = exchange["signed_request"]["request"]
+    issued_request = Unidpp::S13.issue_request(request, "de-zoll", requester)
+    canonical = Unidpp::AnnexB.request_canonical(request)
+    digest = Digest::SHA256.digest(canonical).unpack("C*")
+    answered = Unidpp::S13.issue_response(
+      {
+        "request_digest" => digest,
+        "outcome" => { "outcome" => "attestation-offer", "attestation_service" => "cn-samr-attestation" },
+        "governing_policy" => "cn-dynamic-bms",
+        "governing_policy_version" => 1
+      },
+      "weilian-shenzhen",
+      custodian
+    )
+    nr = Unidpp::S13.countersign(answered, "cn-samr", 1, authority)
+    graph = {
+      "de-zoll" => { requester.key_id => requester.public_bytes },
+      "weilian-shenzhen" => { custodian.key_id => custodian.public_bytes },
+      "cn-samr" => { authority.key_id => authority.public_bytes }
+    }
+    expect(Unidpp::S13.verify_request(issued_request, graph)).to eq(ok: true)
+    expect(Unidpp::S13.verify_response(answered, graph)).to eq(ok: true)
+    expect(Unidpp::S13.verify_non_repudiable(nr, graph, 1)).to eq(ok: true)
+    replayed = Unidpp::S13.replay(
+      { "side" => "custodian", "entries" => [issued_request, answered, nr] },
+      graph
+    )
+    expect(replayed[:ok]).to be(true)
+    expect(replayed[:decisions].size).to eq(2)
+  end
+end
